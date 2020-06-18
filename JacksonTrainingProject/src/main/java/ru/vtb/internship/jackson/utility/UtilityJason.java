@@ -2,7 +2,6 @@ package ru.vtb.internship.jackson.utility;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.vtb.internship.jackson.entity.Tag;
 
 import java.io.IOException;
 

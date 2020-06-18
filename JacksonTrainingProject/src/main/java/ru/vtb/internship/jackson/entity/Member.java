@@ -1,11 +1,17 @@
 package ru.vtb.internship.jackson.entity;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.List;
 
 public class Member {
     private long id;
     private String name;
     private List<Task> tasks;
+
+    public Member() {
+        super();
+    }
 
     public long getId() {
         return id;

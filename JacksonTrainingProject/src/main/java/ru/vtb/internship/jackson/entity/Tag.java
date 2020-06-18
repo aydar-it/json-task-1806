@@ -1,6 +1,9 @@
 package ru.vtb.internship.jackson.entity;
 
+import com.fasterxml.jackson.annotation.*;
+
 public class Tag {
+    @JsonAlias({"ID", "Id", "id"})
     private long id;
     private String name;
 
@@ -27,10 +30,5 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[id = %d, name = %s]", id, name);
     }
 }

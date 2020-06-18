@@ -1,8 +1,14 @@
 package ru.vtb.internship.jackson.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Team {
+    @JsonIgnore
     private long id;
     private String name;
     private List<Member> members;
@@ -15,7 +21,8 @@ public class Team {
         this.id = id;
     }
 
-    public String getName() {
+    @JsonGetter("name")
+    public String getTheName() {
         return name;
     }
 

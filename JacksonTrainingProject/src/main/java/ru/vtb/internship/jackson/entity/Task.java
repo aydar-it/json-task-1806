@@ -1,10 +1,13 @@
 package ru.vtb.internship.jackson.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.util.List;
 
+@JsonPropertyOrder({"id", "name", "tags"})
 public class Task {
-    private long id;
     private String name;
+    private long id;
     private List<Tag> tags;
 
     public long getId() {
