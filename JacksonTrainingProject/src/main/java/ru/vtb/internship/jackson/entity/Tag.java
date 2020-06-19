@@ -1,6 +1,6 @@
 package ru.vtb.internship.jackson.entity;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class Tag {
     @JsonAlias({"ID", "Id", "id"})
