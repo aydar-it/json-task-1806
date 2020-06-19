@@ -1,11 +1,14 @@
 package ru.vtb.internship.jackson;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.vtb.internship.jackson.entity.Member;
 import ru.vtb.internship.jackson.entity.Tag;
 import ru.vtb.internship.jackson.entity.Task;
 import ru.vtb.internship.jackson.entity.Team;
 import ru.vtb.internship.jackson.utility.UtilityJason;
 
+import java.util.List;
 import java.util.Map;
 
 public class MainApp {
@@ -43,6 +46,13 @@ public class MainApp {
         Team team = UtilityJason.getObjectFromJson(jsonTeam, Team.class);
         System.out.println(UtilityJason.getJsonFromObject(team));
 
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(jsonTeam);
+        String memberss = node.get("members")
+                .get(0)
+                .get("name")
+                .asText();
+        System.out.println(memberss);
 
     }
 }
