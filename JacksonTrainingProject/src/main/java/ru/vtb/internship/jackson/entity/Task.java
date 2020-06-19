@@ -34,12 +34,4 @@ public class Task {
         this.tags = tags;
     }
 
-    @Override
-    public String toString() {
-        String a = String.format("[id = %d, name = %s, tags = ", id, name);
-        for (Tag tag : tags) {
-            a = a + tag.toString();
-        }
-        return a + "]";
-    }
 }

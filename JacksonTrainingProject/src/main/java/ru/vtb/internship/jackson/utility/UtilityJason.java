@@ -8,11 +8,11 @@ import java.io.IOException;
 public class UtilityJason {
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static <T> T getObjectFromText(String value, Class<T> cl) throws IOException {
+    public static <T> T getObjectFromJson(String value, Class<T> cl) throws IOException {
         return mapper.readValue(value, cl);
     }
 
-    public static <T> String getTextFromObject(T obj) throws JsonProcessingException {
+    public static <T> String getJsonFromObject(T obj) throws JsonProcessingException {
         return mapper.writeValueAsString(obj);
     }
 
