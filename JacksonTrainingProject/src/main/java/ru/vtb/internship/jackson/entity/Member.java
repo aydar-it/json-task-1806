@@ -1,16 +1,20 @@
 package ru.vtb.internship.jackson.entity;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Member {
     private long id;
     private String name;
     private List<Task> tasks;
+    private Map<String, String> properties = new HashMap<>();
 
-    public Member() {
-        super();
+    @JsonAnyGetter
+    public Map<String, String> getProperties() {
+        return properties;
     }
 
     public long getId() {

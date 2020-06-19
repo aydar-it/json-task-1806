@@ -6,6 +6,8 @@ import ru.vtb.internship.jackson.entity.Task;
 import ru.vtb.internship.jackson.entity.Team;
 import ru.vtb.internship.jackson.utility.UtilityJason;
 
+import java.util.Map;
+
 public class MainApp {
     public static void main(String[] args) throws Exception{
         MainApp.showExamples();
@@ -30,6 +32,8 @@ public class MainApp {
         String jsonMember = "{\"id\":10, \"name\":\"Ivan\", \"tasks\":[{\"id\" : 1, \"name\" : " +
                 "\"Create new git account\", \"tags\" : [{\"id\" : 2, \"name\" : \"java\"}]}]}";
         Member member = UtilityJason.getObjectFromJson(jsonMember, Member.class);
+        Map<String, String> map = member.getProperties();
+        map.put("attr", "value");
         System.out.println(UtilityJason.getJsonFromObject(member));
 
         String jsonTeam = "{\"id\":18, \"name\":\"Winners\", \"members\" : [{\"id\":10, \"name\":\"Ivan\", " +
@@ -38,5 +42,7 @@ public class MainApp {
                 "account\", \"tags\" : [{\"id\" : 2, \"name\" : \"java\"}]}]}]}]}";
         Team team = UtilityJason.getObjectFromJson(jsonTeam, Team.class);
         System.out.println(UtilityJason.getJsonFromObject(team));
+
+
     }
 }
