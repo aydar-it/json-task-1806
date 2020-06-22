@@ -1,0 +1,14 @@
+{
+  "id": 2,
+  "name": "Read manual",
+  "tags": [
+    {
+      "id": 2,
+      "name": "java"
+    },
+    {
+      "id": 3,
+      "name": "vagrant"
+    }
+  ]
+}

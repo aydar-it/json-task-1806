@@ -1,0 +1,38 @@
+{
+  "id": 18,
+  "name": "Winners",
+  "members": [
+    {
+      "id": 10,
+      "name": "Ivan",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Create new git account",
+          "tags": [
+            {
+              "id": 2,
+              "name": "java"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Petya",
+      "tasks": [
+        {
+          "id": 1,
+          "name": "Create new git account",
+          "tags": [
+            {
+              "id": 2,
+              "name": "java"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

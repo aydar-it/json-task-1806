@@ -1,11 +1,17 @@
 package ru.vtb.internship.jackson.entity;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Objects;
 
+@XmlRootElement(name = "tag")
+@XmlType(propOrder = {"id", "name"})
+@JsonPropertyOrder({"id", "name"})
 public class Tag {
-    @JsonAlias({"ID", "Id", "id"})
+    @JsonAlias({"ID", "Id"})
     private long id;
     private String name;
 

@@ -2,9 +2,15 @@ package ru.vtb.internship.jackson.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 import java.util.Objects;
 
+@XmlRootElement(name = "task")
+@XmlType(propOrder = {"id", "name", "tags"})
 @JsonPropertyOrder({"id", "name", "tags"})
 public class Task {
     private String name;
@@ -41,7 +47,9 @@ public class Task {
         }
     }
 
-    public List<? extends Tag> getTags() {
+    @XmlElementWrapper(name = "tags")
+    @XmlElement(name = "tag")
+    public List<Tag> getTags() {
         return tags;
     }
 

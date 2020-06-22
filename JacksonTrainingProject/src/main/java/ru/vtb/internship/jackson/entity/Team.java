@@ -1,13 +1,18 @@
 package ru.vtb.internship.jackson.entity;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 import java.util.Objects;
 
+@XmlRootElement(name = "team")
+@XmlType(propOrder = {"id", "name", "members"})
+@JsonPropertyOrder({"id", "name", "members"})
 public class Team {
-    @JsonIgnore
     private long id;
     private String name;
     private List<Member> members;
@@ -32,8 +37,7 @@ public class Team {
         this.id = id;
     }
 
-    @JsonGetter("name")
-    public String getTheName() {
+    public String getName() {
         return name;
     }
 
@@ -43,7 +47,9 @@ public class Team {
         }
     }
 
-    public List<? extends Member> getMembers() {
+    @XmlElementWrapper(name = "members")
+    @XmlElement(name = "member")
+    public List<Member> getMembers() {
         return members;
     }
 

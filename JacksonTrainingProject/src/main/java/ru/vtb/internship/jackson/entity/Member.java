@@ -1,33 +1,51 @@
 package ru.vtb.internship.jackson.entity;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.*;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlType(propOrder = {"id", "name", "tasks"})
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonPropertyOrder({"id", "name", "tasks"})
 public class Member {
+    @JsonAlias({"ID", "Id"})
     private long id;
+    @JsonAlias({"Name", "NAME"})
     private String name;
     private List<Task> tasks;
-    private Map<String, String> properties = new HashMap<>();
+    private final Map<String, Object> properties = new HashMap<>();
 
     public Member() {
     }
 
-    public Member(long id, String name, List<Task> tasks, Map<String, String> properties) {
-        if (name == null || tasks == null || properties == null) {
-            throw new RuntimeException("Name, tasks and properties can't be null!");
+    @JsonCreator
+    public Member(
+            @JsonProperty("id") long id,
+            @JsonProperty("name") String name,
+            @JsonProperty("tasks") List<Task> tasks) {
+        if (name == null || tasks == null) {
+//            throw new RuntimeException("Name, tasks and properties can't be null!");
         }
         this.id = id;
         this.name = name;
         this.tasks = tasks;
-        this.properties = properties;
+    }
+
+    @JsonAnySetter
+    public void setProperties(String fieldName, Object value) {
+        properties.put(fieldName, value);
     }
 
     @JsonAnyGetter
-    public Map<String, String> getProperties() {
+    public Map<String, Object> getProperties() {
         return properties;
     }
 
@@ -35,28 +53,26 @@ public class Member {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        if (name != null) {
-            this.name = name;
-        }
-    }
-
-    public List<? extends Task> getTasks() {
+    @XmlElementWrapper(name = "tasks")
+    @XmlElement(name = "task")
+    public List<Task> getTasks() {
         return tasks;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setTasks(List<Task> tasks) {
-        if (tasks != null) {
-            this.tasks = tasks;
-        }
+        this.tasks = tasks;
     }
 
     @Override
