@@ -1,6 +1,9 @@
 package ru.vtb.internship.jackson.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -17,12 +20,15 @@ public class Task {
     private long id;
     private List<Tag> tags;
 
+    @JsonIgnore
+    private static final Logger log = LogManager.getLogger(Team.class);
+
     public Task() {
     }
 
     public Task(String name, long id, List<Tag> tags) {
         if (name == null || tags == null) {
-            throw new RuntimeException("Name and tags can't be null!");
+            log.warn("Created new task with null : name = " + name + " tags = " + tags);
         }
         this.name = name;
         this.id = id;
@@ -42,9 +48,10 @@ public class Task {
     }
 
     public void setName(String name) {
-        if (name != null) {
-            this.name = name;
+        if (name == null) {
+            log.warn("Task->name set to null");
         }
+        this.name = name;
     }
 
     @XmlElementWrapper(name = "tags")
@@ -54,9 +61,10 @@ public class Task {
     }
 
     public void setTags(List<Tag> tags) {
-        if (tags != null) {
-            this.tags = tags;
+        if (name == null) {
+            log.warn("Task->tags set to null");
         }
+        this.tags = tags;
     }
 
     @Override

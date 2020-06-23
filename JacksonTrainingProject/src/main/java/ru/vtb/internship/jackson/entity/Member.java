@@ -1,6 +1,8 @@
 package ru.vtb.internship.jackson.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -23,6 +25,9 @@ public class Member {
     private List<Task> tasks;
     private final Map<String, Object> properties = new HashMap<>();
 
+    @JsonIgnore
+    private static final Logger log = LogManager.getLogger(Team.class);
+
     public Member() {
     }
 
@@ -32,7 +37,7 @@ public class Member {
             @JsonProperty("name") String name,
             @JsonProperty("tasks") List<Task> tasks) {
         if (name == null || tasks == null) {
-//            throw new RuntimeException("Name, tasks and properties can't be null!");
+            log.warn("Created new member with null : name = " + name + " tasks = " + tasks);
         }
         this.id = id;
         this.name = name;
@@ -68,10 +73,15 @@ public class Member {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name == null) {
+            log.warn("Member->name set to null");
+        }
     }
 
     public void setTasks(List<Task> tasks) {
+        if (name == null) {
+            log.warn("Member->tasks set to null");
+        }
         this.tasks = tasks;
     }
 

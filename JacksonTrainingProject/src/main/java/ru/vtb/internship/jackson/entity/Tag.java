@@ -1,7 +1,10 @@
 package ru.vtb.internship.jackson.entity;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -15,12 +18,15 @@ public class Tag {
     private long id;
     private String name;
 
+    @JsonIgnore
+    private static final Logger log = LogManager.getLogger(Team.class);
+
     public Tag() {
     }
 
     public Tag(long id, String name) {
         if (name == null) {
-            throw new RuntimeException("Name can't be null");
+            log.warn("Created new tag with null : name = " + name);
         }
         this.id = id;
         this.name = name;
@@ -39,9 +45,10 @@ public class Tag {
     }
 
     public void setName(String name) {
-        if (name != null) {
-            this.name = name;
+        if (name == null) {
+            log.warn("Tag->name set to null");
         }
+        this.name = name;
     }
 
     @Override
