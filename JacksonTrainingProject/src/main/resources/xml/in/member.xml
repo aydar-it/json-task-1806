@@ -5,7 +5,13 @@
     <tasks>
         <task>
             <id>1</id>
-            <name>Create new git account</name>
+            <name>SomeName</name>
+            <tags>
+                    <tag>
+                        <id>3</id>
+                        <name>Git</name>
+                    </tag>
+            </tags>
         </task>
     </tasks>
 </member>
