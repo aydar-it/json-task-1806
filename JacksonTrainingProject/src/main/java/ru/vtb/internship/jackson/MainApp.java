@@ -96,49 +96,4 @@ public class MainApp {
             e.printStackTrace();
         }
     }
-
-    public static void showJsonExamples() {
-
-        try {
-            String jsonTag = FileHelper.getFileContent("src\\main\\resources\\json\\in\\tag.json");
-            Tag tag = UtilityJason.getObjectFromJson(jsonTag, Tag.class);
-            System.out.println(UtilityJason.getJsonFromObject(tag));
-
-            String jsonTag2 = FileHelper.getFileContent("src\\main\\resources\\json\\in\\tag2.json");
-            Tag tag2 = UtilityJason.getObjectFromJson(jsonTag2, Tag.class);
-            System.out.println(UtilityJason.getJsonFromObject(tag2));
-
-            String jsonTask = FileHelper.getFileContent("src\\main\\resources\\json\\in\\task.json");
-            Task task = UtilityJason.getObjectFromJson(jsonTask, Task.class);
-            System.out.println(UtilityJason.getJsonFromObject(task));
-
-            String jsonMember = FileHelper.getFileContent("src\\main\\resources\\json\\in\\member.json");
-            Member member = UtilityJason.getObjectFromJson(jsonMember, Member.class);
-            System.out.println(UtilityJason.getJsonFromObject(member));
-
-            String jsonTeam = FileHelper.getFileContent("src\\main\\resources\\json\\in\\team.json");
-            Team team = UtilityJason.getObjectFromJson(jsonTeam, Team.class);
-            System.out.println(UtilityJason.getJsonFromObject(team));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void showXmlExamples() {
-        try {
-            String origTag = FileHelper.getFileContent("src\\main\\resources\\xml\\in\\tag.xml");
-            Tag tag = UtilityXml.getObjectFromXml(origTag, Tag.class);
-            System.out.println(UtilityXml.getXmlFromObject(tag, Tag.class));
-
-            String origTeam = FileHelper.getFileContent("src\\main\\resources\\xml\\in\\team.xml");
-            Team team = UtilityXml.getObjectFromXml(origTeam, Team.class);
-            System.out.println(UtilityXml.getXmlFromObject(team, Team.class));
-
-            String origMember = FileHelper.getFileContent("src\\main\\resources\\xml\\in\\member.xml");
-            Member member = UtilityXml.getObjectFromXml(origMember, Member.class);
-            System.out.println(UtilityXml.getXmlFromObject(member, Member.class));
-        } catch (FileNotFoundException | JAXBException e) {
-            e.printStackTrace();
-        }
-    }
 }
