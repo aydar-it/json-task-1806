@@ -7,10 +7,10 @@
             <id>1</id>
             <name>SomeName</name>
             <tags>
-                    <tag>
-                        <id>3</id>
-                        <name>Git</name>
-                    </tag>
+                <tag>
+                    <id>3</id>
+                    <name>Git</name>
+                </tag>
             </tags>
         </task>
     </tasks>

@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test;
 import ru.vtb.internship.jackson.entity.Member;
 import ru.vtb.internship.jackson.entity.Tag;
 import ru.vtb.internship.jackson.entity.Task;
+import ru.vtb.internship.jackson.utility.FileHelper;
 import ru.vtb.internship.jackson.utility.UtilityXml;
 
 import java.util.Arrays;
@@ -21,10 +22,10 @@ public class TestUtilityXml {
                 "            <id>1</id>\n" +
                 "            <name>SomeName</name>\n" +
                 "            <tags>\n" +
-                "                    <tag>\n" +
-                "                        <id>3</id>\n" +
-                "                        <name>Git</name>\n" +
-                "                    </tag>\n" +
+                "                <tag>\n" +
+                "                    <id>3</id>\n" +
+                "                    <name>Git</name>\n" +
+                "                </tag>\n" +
                 "            </tags>\n" +
                 "        </task>\n" +
                 "    </tasks>\n" +

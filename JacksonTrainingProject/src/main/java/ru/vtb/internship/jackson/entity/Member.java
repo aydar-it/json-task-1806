@@ -76,6 +76,7 @@ public class Member {
         if (name == null) {
             log.warn("Member->name set to null");
         }
+        this.name = name;
     }
 
     public void setTasks(List<Task> tasks) {
