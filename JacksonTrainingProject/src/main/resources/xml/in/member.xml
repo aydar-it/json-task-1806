@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<member>
+    <id>9</id>
+    <name>Misha</name>
+    <tasks>
+        <task>
+            <id>1</id>
+            <name>Create new git account</name>
+        </task>
+    </tasks>
+</member>

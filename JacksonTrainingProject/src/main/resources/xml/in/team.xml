@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<team>
+    <id>15</id>
+    <name>Winners</name>
+    <members>
+        <member>
+            <id>10</id>
+            <name>Ivan</name>
+            <tasks>
+                <task>
+                    <id>1</id>
+                    <name>Create new git account</name>
+                </task>
+            </tasks>
+        </member>
+        <member>
+            <id>6</id>
+            <name>Petya</name>
+            <tasks>
+                <task>
+                    <id>1</id>
+                    <name>Create new git account</name>
+                </task>
+            </tasks>
+        </member>
+    </members>
+</team>

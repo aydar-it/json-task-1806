@@ -1,58 +1,144 @@
 package ru.vtb.internship.jackson;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.vtb.internship.jackson.entity.Member;
 import ru.vtb.internship.jackson.entity.Tag;
 import ru.vtb.internship.jackson.entity.Task;
 import ru.vtb.internship.jackson.entity.Team;
+import ru.vtb.internship.jackson.utility.FileHelper;
 import ru.vtb.internship.jackson.utility.UtilityJason;
+import ru.vtb.internship.jackson.utility.UtilityXml;
 
-import java.util.List;
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainApp {
-    public static void main(String[] args) throws Exception{
-        MainApp.showExamples();
+
+    private static final Logger log = LogManager.getRootLogger();
+    private static final Map<String, Class> classes;
+
+    static {
+        classes = new HashMap<>();
+        classes.put("team", Team.class);
+        classes.put("tag", Tag.class);
+        classes.put("member", Member.class);
+        classes.put("task", Task.class);
     }
 
-    public static void showExamples() throws Exception {
-        String jsonTag = "{\"ID\" : 2, \"name\" : \"java\"}";
-        String jsonTag2 = "{\"Id\" : 3, \"name\" : \"vagrant\"}";
-        Tag tag = UtilityJason.getObjectFromJson(jsonTag, Tag.class);
-        System.out.println(UtilityJason.getJsonFromObject(tag));
-        Tag tag2 = UtilityJason.getObjectFromJson(jsonTag2, Tag.class);
-        System.out.println(UtilityJason.getJsonFromObject(tag2));
+    public static void main(String[] args) {
+        startApp(args);
+    }
 
-        String jsonTask = "{\"id\" : 2, \"name\" : \"Read manual\", \"tags\" : [{\"id\" : 2, \"name\" : \"java\"}," +
-                " {\"id\" : 3, \"name\" : \"vagrant\"}]}";
-        String jsonTask2 = "{\"id\" : 1, \"name\" : \"Create new git account\", \"tags\" : [{\"id\" : 2, \"name\" : \"java\"}]}";
-        Task task = UtilityJason.getObjectFromJson(jsonTask, Task.class);
-        System.out.println(UtilityJason.getJsonFromObject(task));
-        Task task2 = UtilityJason.getObjectFromJson(jsonTask2, Task.class);
-        System.out.println(UtilityJason.getJsonFromObject(task2));
+    private static void startApp(String[] args) {
+        Pattern pattern = Pattern.compile("(.*\\.(.+)) (.+)");
+        for (String arg : args) {
+            Matcher matcher = pattern.matcher(arg);
+            if (!matcher.find()) {
+                log.debug("Wrong input : " + arg);
+                continue;
+            }
+            Class cl = getClassSetting(matcher.group(3));
+            Converter converter = getFunc(matcher.group(2));
+            if (cl == null || converter == null) {
+                continue;
+            }
+            log.info("Start convert : " + arg);
+            converter.convert(matcher.group(1), cl);
+        }
+    }
 
-        String jsonMember = "{\"id\":10, \"name\":\"Ivan\", \"tasks\":[{\"id\" : 1, \"name\" : " +
-                "\"Create new git account\", \"tags\" : [{\"id\" : 2, \"name\" : \"java\"}]}]}";
-        Member member = UtilityJason.getObjectFromJson(jsonMember, Member.class);
-        Map<String, String> map = member.getProperties();
-        map.put("attr", "value");
-        System.out.println(UtilityJason.getJsonFromObject(member));
+    private static Converter getFunc(String type) {
+        switch (type) {
+            case "xml":
+                return MainApp::xmlFileConvert;
+            case "json":
+                return MainApp::jsonFileConvert;
+        }
+        log.debug("Invalid file format : " + type);
+        return null;
+    }
 
-        String jsonTeam = "{\"id\":18, \"name\":\"Winners\", \"members\" : [{\"id\":10, \"name\":\"Ivan\", " +
-                "\"tasks\":[{\"id\" : 1, \"name\" : \"Create new git account\", \"tags\" : [{\"id\" : 2, \"name\" : " +
-                "\"java\"}]}]}, {\"id\":6, \"name\":\"Petya\", \"tasks\":[{\"id\" : 1, \"name\" : \"Create new git " +
-                "account\", \"tags\" : [{\"id\" : 2, \"name\" : \"java\"}]}]}]}]}";
-        Team team = UtilityJason.getObjectFromJson(jsonTeam, Team.class);
-        System.out.println(UtilityJason.getJsonFromObject(team));
+    private static Class getClassSetting(String group) {
+        Class cl = classes.get(group);
+        if (cl == null) {
+            log.debug("Invalid class : " + group);
+        }
+        return cl;
+    }
 
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(jsonTeam);
-        String memberss = node.get("members")
-                .get(0)
-                .get("name")
-                .asText();
-        System.out.println(memberss);
+    private static <T> void xmlFileConvert(String fileName, Class<T> cl) {
+        try {
+            String fileText = FileHelper.getFileContent(fileName);
+            T obj = UtilityXml.getObjectFromXml(fileText, cl);
+            System.out.println(UtilityXml.getXmlFromObject(obj, cl));
+            System.out.println(UtilityJason.getJsonFromObject(obj));
+        } catch (JAXBException | JsonProcessingException | FileNotFoundException e) {
+            log.warn(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
+    private static <T> void jsonFileConvert(String fileName, Class<T> cl) {
+        try {
+            String fileText = FileHelper.getFileContent(fileName);
+            T obj = UtilityJason.getObjectFromJson(fileText, cl);
+            System.out.println(UtilityXml.getXmlFromObject(obj, cl));
+            System.out.println(UtilityJason.getJsonFromObject(obj));
+        } catch (IOException | JAXBException e) {
+            log.warn(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void showJsonExamples() {
+
+        try {
+            String jsonTag = FileHelper.getFileContent("src\\main\\resources\\json\\in\\tag.json");
+            Tag tag = UtilityJason.getObjectFromJson(jsonTag, Tag.class);
+            System.out.println(UtilityJason.getJsonFromObject(tag));
+
+            String jsonTag2 = FileHelper.getFileContent("src\\main\\resources\\json\\in\\tag2.json");
+            Tag tag2 = UtilityJason.getObjectFromJson(jsonTag2, Tag.class);
+            System.out.println(UtilityJason.getJsonFromObject(tag2));
+
+            String jsonTask = FileHelper.getFileContent("src\\main\\resources\\json\\in\\task.json");
+            Task task = UtilityJason.getObjectFromJson(jsonTask, Task.class);
+            System.out.println(UtilityJason.getJsonFromObject(task));
+
+            String jsonMember = FileHelper.getFileContent("src\\main\\resources\\json\\in\\member.json");
+            Member member = UtilityJason.getObjectFromJson(jsonMember, Member.class);
+            System.out.println(UtilityJason.getJsonFromObject(member));
+
+            String jsonTeam = FileHelper.getFileContent("src\\main\\resources\\json\\in\\team.json");
+            Team team = UtilityJason.getObjectFromJson(jsonTeam, Team.class);
+            System.out.println(UtilityJason.getJsonFromObject(team));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showXmlExamples() {
+        try {
+            String origTag = FileHelper.getFileContent("src\\main\\resources\\xml\\in\\tag.xml");
+            Tag tag = UtilityXml.getObjectFromXml(origTag, Tag.class);
+            System.out.println(UtilityXml.getXmlFromObject(tag, Tag.class));
+
+            String origTeam = FileHelper.getFileContent("src\\main\\resources\\xml\\in\\team.xml");
+            Team team = UtilityXml.getObjectFromXml(origTeam, Team.class);
+            System.out.println(UtilityXml.getXmlFromObject(team, Team.class));
+
+            String origMember = FileHelper.getFileContent("src\\main\\resources\\xml\\in\\member.xml");
+            Member member = UtilityXml.getObjectFromXml(origMember, Member.class);
+            System.out.println(UtilityXml.getXmlFromObject(member, Member.class));
+        } catch (FileNotFoundException | JAXBException e) {
+            e.printStackTrace();
+        }
     }
 }
