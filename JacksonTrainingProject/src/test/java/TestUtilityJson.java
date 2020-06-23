@@ -2,34 +2,15 @@ import org.junit.jupiter.api.Test;
 import ru.vtb.internship.jackson.entity.Member;
 import ru.vtb.internship.jackson.entity.Tag;
 import ru.vtb.internship.jackson.entity.Task;
-import ru.vtb.internship.jackson.utility.FileHelper;
 import ru.vtb.internship.jackson.utility.UtilityJason;
-import ru.vtb.internship.jackson.utility.UtilityXml;
 
-
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestUtilityJson {
-    private static final String json = "{\n" +
-            "  \"id\": 9,\n" +
-            "  \"name\": \"Misha\",\n" +
-            "  \"tasks\": [\n" +
-            "    {\n" +
-            "      \"id\": 1,\n" +
-            "      \"name\": \"SomeName\",\n" +
-            "      \"tags\": [\n" +
-            "        {\n" +
-            "          \"id\": 3,\n" +
-            "          \"name\": \"Git\"\n" +
-            "        }\n" +
-            "      ]\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+    private static final String json = "{\"id\":9,\"name\":\"Misha\",\"tasks\":[{\"id\":1,\"name\":\"SomeName\",\"tags\":[{\"id\":3,\"name\":\"Git\"}]}]}";
 
     private static final Member member;
 
