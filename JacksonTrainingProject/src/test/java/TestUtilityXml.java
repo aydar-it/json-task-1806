@@ -32,6 +32,7 @@ public class TestUtilityXml {
         List<Tag> tags = Arrays.asList(new Tag(3, "Git"));
         List<Task> tasks = Arrays.asList(new Task("SomeName", 1, tags));
         Member member = new Member(9, "Misha", tasks);
+        Member member1 = UtilityXml.getObjectFromXml(testXml, Member.class);
         String check = UtilityXml.getXmlFromObject(member, Member.class);
         assertTrue(testXml.equals(check));
     }
