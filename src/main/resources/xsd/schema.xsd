@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="team" type="team" minOccurs="0" maxOccurs="1" />
+                <xs:element name="member" type="member" minOccurs="0" maxOccurs="1" />
+                <xs:element name="task" type="task" minOccurs="0" maxOccurs="1" />
+                <xs:element name="tag" type="tag" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="tag">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="1" nillable="true" />
+            <xs:element name="name" type="xs:string" minOccurs="1" nillable="true" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="tags">
+        <xs:sequence>
+            <xs:element name="tag" type="tag" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="task">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="1" nillable="true" />
+            <xs:element name="name" type="xs:string" minOccurs="1" nillable="true" />
+            <xs:element name="tags" type="tags" minOccurs="0" maxOccurs="1" nillable="true" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="tasks">
+        <xs:sequence>
+            <xs:element name="task" type="task" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="member">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="1" nillable="true" />
+            <xs:element name="name" type="xs:string" minOccurs="1" nillable="true" />
+            <xs:element name="tasks" type="tasks" minOccurs="0" maxOccurs="1" nillable="true" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="members">
+        <xs:sequence>
+            <xs:element name="member" type="member" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="team">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="1" maxOccurs="1" nillable="true" />
+            <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" nillable="true" />
+            <xs:element name="members" type="members" minOccurs="0" maxOccurs="1" nillable="true" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

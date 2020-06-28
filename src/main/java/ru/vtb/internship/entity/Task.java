@@ -1,4 +1,4 @@
-package ru.vtb.internship.jackson.entity;
+package ru.vtb.internship.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -12,27 +12,27 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 import java.util.Objects;
 
-@XmlRootElement(name = "team")
-@XmlType(propOrder = {"id", "name", "members"})
-@JsonPropertyOrder({"id", "name", "members"})
-public class Team {
-    private long id;
+@XmlRootElement(name = "task")
+@XmlType(propOrder = {"id", "name", "tags"})
+@JsonPropertyOrder({"id", "name", "tags"})
+public class Task {
     private String name;
-    private List<Member> members;
+    private long id;
+    private List<Tag> tags;
 
     @JsonIgnore
     private static final Logger log = LogManager.getLogger(Team.class);
 
-    public Team() {
+    public Task() {
     }
 
-    public Team(long id, String name, List<Member> members) {
-        if (name == null || members == null) {
-            log.warn("Created new team with null : name = " + name + " member = " + members);
+    public Task(String name, long id, List<Tag> tags) {
+        if (name == null || tags == null) {
+            log.warn("Created new task with null : name = " + name + " tags = " + tags);
         }
-        this.id = id;
         this.name = name;
-        this.members = members;
+        this.id = id;
+        this.tags = tags;
     }
 
     public long getId() {
@@ -49,36 +49,36 @@ public class Team {
 
     public void setName(String name) {
         if (name == null) {
-            log.warn("Team->name set to null");
+            log.warn("Task->name set to null");
         }
         this.name = name;
     }
 
-    @XmlElementWrapper(name = "members")
-    @XmlElement(name = "member")
-    public List<Member> getMembers() {
-        return members;
+    @XmlElementWrapper(name = "tags")
+    @XmlElement(name = "tag")
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public void setMembers(List<Member> members) {
+    public void setTags(List<Tag> tags) {
         if (name == null) {
-            log.warn("Team->members set to null");
+            log.warn("Task->tags set to null");
         }
-        this.members = members;
+        this.tags = tags;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return id == team.id &&
-                Objects.equals(name, team.name) &&
-                Objects.equals(members, team.members);
+        Task task = (Task) o;
+        return id == task.id &&
+                Objects.equals(name, task.name) &&
+                Objects.equals(tags, task.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, members);
+        return Objects.hash(name, id, tags);
     }
 }

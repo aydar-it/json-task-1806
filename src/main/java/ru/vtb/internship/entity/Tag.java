@@ -1,4 +1,4 @@
-package ru.vtb.internship.jackson.entity;
+package ru.vtb.internship.entity;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;

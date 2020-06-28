@@ -1,4 +1,7 @@
-package ru.vtb.internship.jackson.utility;
+package ru.vtb.internship.utility;
+
+import ru.vtb.internship.exceptions.ConverterFileNotFoundException;
+import ru.vtb.internship.exceptions.ConverterIOException;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -9,19 +12,23 @@ import java.util.Scanner;
 
 public class FileHelper {
 
-    public static String getFileContent(String path) throws FileNotFoundException {
+    public String getFileContent(String path) throws ConverterFileNotFoundException {
         try (Scanner scanner = new Scanner(new FileInputStream(path))) {
             StringBuilder tmp = new StringBuilder();
             while (scanner.hasNextLine()) {
                 tmp.append(scanner.nextLine()).append('\n');
             }
             return tmp.toString();
+        } catch (FileNotFoundException e) {
+            throw new ConverterFileNotFoundException(e.getMessage());
         }
     }
 
-    public static void writeNewFile(String name, String content) throws IOException {
+    public void writeNewFile(String name, String content) throws ConverterIOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(name))) {
             bw.write(content);
+        } catch (IOException e) {
+            throw new ConverterIOException(e.getMessage());
         }
     }
 }
